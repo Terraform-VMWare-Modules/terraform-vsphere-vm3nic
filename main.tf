@@ -10,7 +10,17 @@ data "vsphere_resource_pool" "pool" {
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 data "vsphere_network" "network" {
-  name          = "${var.vlan}"
+  name          = "${var.net01}"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_network" "network01" {
+  name          = "${var.net02}"
+  datacenter_id = "${data.vsphere_datacenter.dc.id}"
+}
+
+data "vsphere_network" "network02" {
+  name          = "${var.net03}"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 data "vsphere_virtual_machine" "template" {
@@ -35,6 +45,14 @@ resource "vsphere_virtual_machine" "LinuxVM" {
     network_id   = "${data.vsphere_network.network.id}"
     adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
   }
+  network_interface {
+    network_id   = "${data.vsphere_network.network01.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
+  network_interface {
+    network_id   = "${data.vsphere_network.network02.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
   disk {
     label            = "disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
@@ -49,11 +67,18 @@ resource "vsphere_virtual_machine" "LinuxVM" {
         host_name = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
         domain    = "${var.vmdomain}"
       }
-
       network_interface {
-        ipv4_address = "${element(var.ipaddress, count.index)}"
-        ipv4_netmask = "${var.ipv4submask}"      
-        }
+        ipv4_address = "${element(var.net01-ip, count.index)}"
+        ipv4_netmask = "${var.net01-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net02-ip, count.index)}"
+        ipv4_netmask = "${var.net02-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net03-ip, count.index)}"
+        ipv4_netmask = "${var.net03-ipv4submask}"
+      }
       dns_server_list = "${var.vmdns}"
       ipv4_gateway    = "${var.vmgateway}"
     }
@@ -77,6 +102,14 @@ resource "vsphere_virtual_machine" "LinuxVM-withDataDisk" {
     network_id   = "${data.vsphere_network.network.id}"
     adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
   }
+  network_interface {
+    network_id   = "${data.vsphere_network.network01.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
+  network_interface {
+    network_id   = "${data.vsphere_network.network02.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
   disk {
     label            = "disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
@@ -96,11 +129,18 @@ resource "vsphere_virtual_machine" "LinuxVM-withDataDisk" {
         host_name = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
         domain    = "${var.vmdomain}"
       }
-
       network_interface {
-        ipv4_address = "${element(var.ipaddress, count.index)}"
-        ipv4_netmask = "${var.ipv4submask}"      
-        }
+        ipv4_address = "${element(var.net01-ip, count.index)}"
+        ipv4_netmask = "${var.net01-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net02-ip, count.index)}"
+        ipv4_netmask = "${var.net02-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net03-ip, count.index)}"
+        ipv4_netmask = "${var.net03-ipv4submask}"
+      }
       dns_server_list = "${var.vmdns}"
       ipv4_gateway    = "${var.vmgateway}"
     }
@@ -125,6 +165,14 @@ resource "vsphere_virtual_machine" "WindowsVM" {
     network_id   = "${data.vsphere_network.network.id}"
     adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
   }
+  network_interface {
+    network_id   = "${data.vsphere_network.network01.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
+  network_interface {
+    network_id   = "${data.vsphere_network.network02.id}"
+    adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
+  }
   disk {
     label            = "disk0"
     size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
@@ -140,10 +188,17 @@ resource "vsphere_virtual_machine" "WindowsVM" {
         admin_password = "${var.winadminpass}"
         run_once_command_list = "${var.run_once}"
       }
-
       network_interface {
-        ipv4_address = "${element(var.ipaddress, count.index)}"
-        ipv4_netmask = "${var.ipv4submask}"
+        ipv4_address = "${element(var.net01-ip, count.index)}"
+        ipv4_netmask = "${var.net01-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net02-ip, count.index)}"
+        ipv4_netmask = "${var.net02-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net03-ip, count.index)}"
+        ipv4_netmask = "${var.net03-ipv4submask}"
       }
       dns_server_list = "${var.vmdns}"
       ipv4_gateway    = "${var.vmgateway}"
@@ -169,103 +224,12 @@ resource "vsphere_virtual_machine" "WindowsVM-withDataDisk" {
     network_id   = "${data.vsphere_network.network.id}"
     adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
   }
-  disk {
-    label            = "disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
-  }
-  disk {
-    label            = "disk1"
-    size             = "${var.data_disk_size_gb}"
-    unit_number = 1
-  }
-  clone {
-    template_uuid = "${data.vsphere_virtual_machine.template.id}"
-
-    customize {
-      windows_options {
-        computer_name = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
-        admin_password = "${var.winadminpass}"
-        run_once_command_list = "${var.run_once}"
-      }
-
-      network_interface {
-        ipv4_address = "${element(var.ipaddress, count.index)}"
-        ipv4_netmask = "${var.ipv4submask}"
-      }
-      dns_server_list = "${var.vmdns}"
-      ipv4_gateway    = "${var.vmgateway}"
-    }
-  }
-}
-// Creating Windows VM with no Data Disk. (Join to Domain)
-resource "vsphere_virtual_machine" "WindowsVM-Domain" {
-  count            = "${ var.is_windows_image == "true" && var.data_disk == "false" && var.join_windomain == "true" ? var.instances : 0}"
-
-  //Name of the server with index of count +1 to start from 1
-  name             = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
-  resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
-  folder           = "${var.vmfolder}"
-
-  datastore_cluster_id = "${data.vsphere_datastore_cluster.datastore_cluster.id}"
-
-  num_cpus  = "${var.cpu_number}"
-  memory    = "${var.ram_size}"
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
   network_interface {
-    network_id   = "${data.vsphere_network.network.id}"
+    network_id   = "${data.vsphere_network.network01.id}"
     adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
   }
-  disk {
-    label            = "disk0"
-    size             = "${data.vsphere_virtual_machine.template.disks.0.size}"
-    eagerly_scrub    = "${data.vsphere_virtual_machine.template.disks.0.eagerly_scrub}"
-    thin_provisioned = "${data.vsphere_virtual_machine.template.disks.0.thin_provisioned}"
-  }
-  clone {
-    template_uuid = "${data.vsphere_virtual_machine.template.id}"
-
-    customize {
-      windows_options {
-        computer_name = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
-        admin_password = "${var.winadminpass}"
-        join_domain    = "${var.vmdomain}"
-        domain_admin_user = "${var.domainuser}"
-        domain_admin_password = "${var.domainpass}"
-        organization_name = "${var.orgname}"
-        run_once_command_list = "${var.run_once}"
-        product_key = "${var.productkey}"
-      }
-
-      network_interface {
-        ipv4_address = "${element(var.ipaddress, count.index)}"
-        ipv4_netmask = "${var.ipv4submask}"
-      }
-      dns_server_list = "${var.vmdns}"
-      ipv4_gateway    = "${var.vmgateway}"
-    }
-  }
-}
-
-// Creating Windows VM with Data Disk. (Join to Domain)
-resource "vsphere_virtual_machine" "WindowsVM-withDataDisk-Domain" {
-  count            = "${ var.is_windows_image == "true" && var.data_disk == "true" && var.join_windomain == "true" ? var.instances : 0}"
-
-  //Name of the server with index of count +1 to start from 1
-  name             = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
-  resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
-  folder           = "${var.vmfolder}"
-
-  datastore_cluster_id = "${data.vsphere_datastore_cluster.datastore_cluster.id}"
-
-  num_cpus  = "${var.cpu_number}"
-  memory    = "${var.ram_size}"
-  guest_id  = "${data.vsphere_virtual_machine.template.guest_id}"
-  scsi_type = "${data.vsphere_virtual_machine.template.scsi_type}"
   network_interface {
-    network_id   = "${data.vsphere_network.network.id}"
+    network_id   = "${data.vsphere_network.network02.id}"
     adapter_type = "${data.vsphere_virtual_machine.template.network_interface_types[0]}"
   }
   disk {
@@ -286,17 +250,19 @@ resource "vsphere_virtual_machine" "WindowsVM-withDataDisk-Domain" {
       windows_options {
         computer_name = "${var.vmname}${count.index+1}${var.vmnamesuffix}"
         admin_password = "${var.winadminpass}"
-        join_domain    = "${var.vmdomain}"
-        domain_admin_user = "${var.domainuser}"
-        domain_admin_password = "${var.domainpass}"
-        organization_name = "${var.orgname}"
         run_once_command_list = "${var.run_once}"
-        product_key = "${var.productkey}"
       }
-
       network_interface {
-        ipv4_address = "${element(var.ipaddress, count.index)}"
-        ipv4_netmask = "${var.ipv4submask}"
+        ipv4_address = "${element(var.net01-ip, count.index)}"
+        ipv4_netmask = "${var.net01-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net02-ip, count.index)}"
+        ipv4_netmask = "${var.net02-ipv4submask}"
+      }
+      network_interface {
+        ipv4_address = "${element(var.net03-ip, count.index)}"
+        ipv4_netmask = "${var.net03-ipv4submask}"
       }
       dns_server_list = "${var.vmdns}"
       ipv4_gateway    = "${var.vmgateway}"

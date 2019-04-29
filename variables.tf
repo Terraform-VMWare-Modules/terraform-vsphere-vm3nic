@@ -34,14 +34,38 @@ variable "ram_size" {
   description = "VM RAM size in megabytes"
   default = 4096
 }
-variable "vlan" {
+variable "net01" {
   description = "(Required)VLAN name where the VM should be deployed"
 }
-variable "ipv4submask" {
+variable "net02" {
+  description = "(Required)VLAN name where the VM should be deployed"
+}
+variable "net03" {
+  description = "(Required)VLAN name where the VM should be deployed"
+}
+variable "net01-ipv4submask" {
   description = "ipv4 Subnet mask"
   default = 24
 }
-variable "ipaddress" {
+variable "net02-ipv4submask" {
+  description = "ipv4 Subnet mask"
+  default = 24
+}
+variable "net03-ipv4submask" {
+  description = "ipv4 Subnet mask"
+  default = 24
+}
+variable "net01-ip" {
+  description = "host(VM) IP address in list format, support more than one IP. Should correspond to number of instances"
+  type    = "list"
+  default = [""]
+}
+variable "net02-ip" {
+  description = "host(VM) IP address in list format, support more than one IP. Should correspond to number of instances"
+  type    = "list"
+  default = [""]
+}
+variable "net03-ip" {
   description = "host(VM) IP address in list format, support more than one IP. Should correspond to number of instances"
   type    = "list"
   default = [""]
