@@ -13,6 +13,7 @@ This Terraform module deploys single or multiple virtual machines of type (Linux
 * Ability to choose vSphere resource pool or fall back to Cluster/ESXi root resource pool.
 * Ability to deploy Windows images to WorkGroup or Domain.
 * Ability to output VM names and IPs per module.
+* 3 Configurable Network Interface
 
 > Note: For module to work it needs number of required variables corresponding to an existing resources in vSphere. Please refer to variable section for the list of required variables.
 
