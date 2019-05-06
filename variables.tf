@@ -80,8 +80,8 @@ variable "dc" {
 variable "vmrp" {
   description = "Cluster resource pool that VM will be deployed to. you use following to choose default pool in the cluster (esxi1) or (Cluster)/Resources"
 }
-variable "ds_cluster" {
-  description = "Datastore cluster to deploy the VM."
+variable "ds" {
+  description = "Datastore to deploy the VM."
 }
 variable "vmfolder" {
   default = "Discovered virtual machine"

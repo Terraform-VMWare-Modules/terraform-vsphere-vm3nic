@@ -5,15 +5,16 @@ module "example-server-linuxvm" {
   vmtemp            = "TemplateName"
   instances         = 1
   vmname            = "example-server-windows"
-  vmrp              = "esxi/Resources"  
-  net01              = "Name of the VLAN in vSphere for the first NIC"
-  net02              = "Name of the VLAN in vSphere for the Second NIC"
-  net03              = "Name of the VLAN in vSphere for the Third NIC"
+  vmrp              = "esxi/Resources"
+  net01             = "Name of the VLAN in vSphere for the first NIC"
+  net02             = "Name of the VLAN in vSphere for the Second NIC"
+  net03             = "Name of the VLAN in vSphere for the Third NIC"
   data_disk         = "true"
   data_disk_size_gb = 20
   dc                = "Datacenter"
-  ds_cluster        = "Data Store Cluster name"
+  ds                = "Data Store Cluster name"
 }
+
 // Example of Linux VM with Data Disk
 module "example-server-linuxvm-withdatadisk" {
   source            = "Terraform-VMWare-Modules/vm3nic/vsphere"
@@ -21,13 +22,12 @@ module "example-server-linuxvm-withdatadisk" {
   vmtemp            = "TemplateName"
   instances         = 1
   vmname            = "example-server-windows"
-  vmrp              = "esxi/Resources"  
-  net01              = "Name of the VLAN in vSphere for the first NIC"
-  net02              = "Name of the VLAN in vSphere for the Second NIC"
-  net03              = "Name of the VLAN in vSphere for the Third NIC"
+  vmrp              = "esxi/Resources"
+  net01             = "Name of the VLAN in vSphere for the first NIC"
+  net02             = "Name of the VLAN in vSphere for the Second NIC"
+  net03             = "Name of the VLAN in vSphere for the Third NIC"
   data_disk         = "true"
   data_disk_size_gb = 20
   dc                = "Datacenter"
-  ds_cluster        = "Data Store Cluster name"
+  ds                = "Data Store Cluster name"
 }
-

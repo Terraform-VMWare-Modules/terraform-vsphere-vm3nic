@@ -1,8 +1,8 @@
 data "vsphere_datacenter" "dc" {
   name = "${var.dc}"
 }
-data "vsphere_datastore_cluster" "datastore_cluster" {
-  name          = "${var.ds_cluster}"
+data "vsphere_datastore" "datastore" {
+  name          = "${var.ds}"
   datacenter_id = "${data.vsphere_datacenter.dc.id}"
 }
 data "vsphere_resource_pool" "pool" {
@@ -35,7 +35,7 @@ resource "vsphere_virtual_machine" "LinuxVM" {
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   folder           = "${var.vmfolder}"
 
-  datastore_cluster_id = "${data.vsphere_datastore_cluster.datastore_cluster.id}"
+  datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus  = "${var.cpu_number}"
   memory    = "${var.ram_size}"
@@ -92,7 +92,7 @@ resource "vsphere_virtual_machine" "LinuxVM-withDataDisk" {
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   folder           = "${var.vmfolder}"
 
-  datastore_cluster_id = "${data.vsphere_datastore_cluster.datastore_cluster.id}"
+  datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus  = "${var.cpu_number}"
   memory    = "${var.ram_size}"
@@ -155,7 +155,7 @@ resource "vsphere_virtual_machine" "WindowsVM" {
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   folder           = "${var.vmfolder}"
 
-  datastore_cluster_id = "${data.vsphere_datastore_cluster.datastore_cluster.id}"
+  datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus  = "${var.cpu_number}"
   memory    = "${var.ram_size}"
@@ -214,7 +214,7 @@ resource "vsphere_virtual_machine" "WindowsVM-withDataDisk" {
   resource_pool_id = "${data.vsphere_resource_pool.pool.id}"
   folder           = "${var.vmfolder}"
 
-  datastore_cluster_id = "${data.vsphere_datastore_cluster.datastore_cluster.id}"
+  datastore_id = "${data.vsphere_datastore.datastore.id}"
 
   num_cpus  = "${var.cpu_number}"
   memory    = "${var.ram_size}"

@@ -1,6 +1,8 @@
 # Terraform vSphere Module
 
-For Virtual Machine Provisioning with (Linux/Windows) customization.
+For Virtual Machine Provisioning with (Linux/Windows) customization. T
+
+> his version is working with **Datastore** instead of **Datastore Cluster**!!
 
 ## Deploys (Single/Multiple) Virtual Machines to your vSphere environment
 
@@ -25,19 +27,19 @@ You can also download the entire module and use your own predefined variables to
 
 ```hcl
 module "example-server-linuxvm-withdatadisk" {
-  source            = "Terraform-VMWare-Modules/vm3nic/vsphere"
-  version           = "0.1.0"
-  vmtemp            = "TemplateName"
-  instances         = 1
-  vmname            = "example-server-windows"
-  vmrp              = "esxi/Resources"  
+  source             = "Terraform-VMWare-Modules/vm3nic/vsphere"
+  version            = "0.1.0"
+  vmtemp             = "TemplateName"
+  instances          = 1
+  vmname             = "example-server-windows"
+  vmrp               = "esxi/Resources"  
   net01              = "Name of the VLAN in vSphere for the first NIC"
   net02              = "Name of the VLAN in vSphere for the Second NIC"
   net03              = "Name of the VLAN in vSphere for the Third NIC"
-  data_disk         = "true"
-  data_disk_size_gb = 20
-  dc                = "Datacenter"
-  ds_cluster        = "Data Store Cluster name"
+  data_disk          = "true"
+  data_disk_size_gb  = 20
+  dc                 = "Datacenter"
+  ds                 = "Data Store name"
 }
 
 module "example-server-windowsvm-withdatadisk" {
@@ -54,7 +56,7 @@ module "example-server-windowsvm-withdatadisk" {
   data_disk_size_gb = 20
   is_windows_image  = "true"
   dc                = "Datacenter"
-  ds_cluster        = "Data Store Cluster name"
+  ds                = "Data Store name"
   winadminpass      = "Str0ngP@ssw0rd!"
 }
 ```
@@ -91,7 +93,7 @@ module "example-server-windowsvm-withdatadisk-domain" {
   run_once          = ["echo Hello World"]
   productkey        = "WC2BQ-8NRM3-FDDYY-2BFGV-KHKQY"
   dc                = "Datacenter"
-  ds_cluster        = "Data Store Cluster name"
+  ds                = "Data Store name"
   net01-ip         = ["10.0.0.13"]
   net02-ip         = ["10.1.0.13"]
   net03-ip         = ["10.2.0.13"]
