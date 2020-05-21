@@ -31,3 +31,23 @@ module "example-server-linuxvm-withdatadisk" {
   dc                = "Datacenter"
   ds                = "Data Store Cluster name"
 }
+
+
+// Example of Linux VM based on Image with 2 disks.
+module "example-server-linuxvm-image-with2-disks" {
+  source            = "Terraform-VMWare-Modules/vm3nic/vsphere"
+  version           = "0.2.0"
+  vmtemp            = "TemplateName"
+  instances         = 1
+  vmname            = "example-server-windows"
+  vmrp              = "esxi/Resources"
+  net01             = "Name of the VLAN in vSphere for the first NIC"
+  net02             = "Name of the VLAN in vSphere for the Second NIC"
+  net03             = "Name of the VLAN in vSphere for the Third NIC"
+  data_disk         = "true"
+  data_disk_size_gb = 20
+  dc                = "Datacenter"
+  ds                = "Data Store Cluster name"
+  template_with_dual_disk = "true"
+}
+
