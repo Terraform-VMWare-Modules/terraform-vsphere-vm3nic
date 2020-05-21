@@ -16,7 +16,7 @@ module "example-server-linuxvm" {
   version           = "0.1.0"
   vmtemp            = "TemplateName"
   instances         = 1
-  vmname            = "example-server-windows"
+  vmname            = "example-server-linux"
   vmrp              = "esxi/Resources"  
   net01              = "Name of the VLAN in vSphere for the first NIC"
   net02              = "Name of the VLAN in vSphere for the Second NIC"
@@ -36,7 +36,7 @@ module "example-server-linuxvm-withdatadisk" {
   version           = "0.1.0"
   vmtemp            = "TemplateName"
   instances         = 1
-  vmname            = "example-server-windows"
+  vmname            = "example-server-linux"
   vmrp              = "esxi/Resources"  
   net01              = "Name of the VLAN in vSphere for the first NIC"
   net02              = "Name of the VLAN in vSphere for the Second NIC"
