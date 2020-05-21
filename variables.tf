@@ -124,3 +124,9 @@ variable "productkey" {
   default = "WC2BQ-8NRM3-FDDYY-2BFGV-KHKQY"
 }
 
+variable "template_with_dual_disk" {
+  description = "Boolean Control Flag to deploy VMs based on Image with 2 disk configured"
+  default = "false"
+  
+}
+

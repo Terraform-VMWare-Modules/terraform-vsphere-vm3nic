@@ -42,6 +42,25 @@ module "example-server-linuxvm-withdatadisk" {
   ds                 = "Data Store name"
 }
 
+module "example-server-linuxvm-with-2-image-disk" {
+  source             = "Terraform-VMWare-Modules/vm3nic/vsphere"
+  version            = "0.2.0"
+  vmtemp             = "TemplateName"
+  instances          = 1
+  vmname             = "example-server-windows"
+  vmrp               = "esxi/Resources"  
+  net01              = "Name of the VLAN in vSphere for the first NIC"
+  net02              = "Name of the VLAN in vSphere for the Second NIC"
+  net03              = "Name of the VLAN in vSphere for the Third NIC"
+  data_disk          = "true"
+  data_disk_size_gb  = 20
+  dc                 = "Datacenter"
+  ds                 = "Data Store name"
+  template_with_dual_disk= "true"
+}
+
+
+
 module "example-server-windowsvm-withdatadisk" {
   source            = "Terraform-VMWare-Modules/vm3nic/vsphere"
   version           = "0.1.0"
@@ -70,6 +89,7 @@ There are number of switches defined in the module, where you can use to enable 
 * You can use `is_windows_image = "true"` to set the customization type to Windows (By default it is set to Linux customization)
 * You can use `data_disk = "true"` to add one additional disk (Supported in both Linux and Windows deployment)
   * By default it is set to 20GB. You can modify it by using `data_disk_size_gb` variable.
+* You can use 'template_with_dual_disk = "true"' to set terraform for deploy a linux image with already 2 disks.
 
 Below is an example of windows deployment with all available feature sets.
 
